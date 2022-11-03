@@ -65,26 +65,19 @@ struct FilteredValues KalmanFilter::update(SendValues sv)
     debug(Q(1, 1));
     debugln();
 
-    /*................measurements ...........l....*/
+    /*................measurements ...............*/
     Matrix<1> z = {sv.altitude};
     debugln("z: ");
     debug(z(0));
     debugln();
-    if (abs(sv.ax) > 7 || abs(sv.az) > 7)
+
+    if (abs(sv.ax) > 8 || abs(sv.az) > 8)
     {
-        u = 0;
+        u = abs(sv.ay);
     }
     else
     {
-        if (sv.ay > 0)
-        {
-
-            u = (sv.ay - gravity);
-        }
-        else
-        {
-            u = (sv.ay + gravity);
-        }
+        u = abs(sv.ay) - gravity;
     }
     debug("u: ");
     debug(u);
